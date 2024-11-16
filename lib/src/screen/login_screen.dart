@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget{
            emailField(bloc),
            passwordField(bloc),
            Container(margin: const EdgeInsets.only(top: 25.0),),
-           submitButton()
+           submitButton(bloc)
          ],
        ),
      );
@@ -57,15 +57,22 @@ class LoginScreen extends StatelessWidget{
     );
   }
 
-  Widget submitButton(){
-    return ElevatedButton(
-      autofocus: true,
-        onPressed : () {
-          // formKey.currentState?.reset(); // To reset the form
-
-        },
-        child : const Text('Submit')
+  Widget submitButton(Bloc bloc) {
+    return StreamBuilder<bool>(
+      stream: bloc.submitValid,
+      builder: (context, snapshot) {
+        return ElevatedButton(
+          autofocus: true,
+          onPressed: (snapshot.hasData && snapshot.data == true)
+              ? () {
+            print("Form is valid. Proceed with submission.");
+          }
+              : null, // Disable button if there's an error or no valid data
+          child: const Text('Submit'),
+        );
+      },
     );
   }
+
 
 }
