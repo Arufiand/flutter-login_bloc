@@ -65,7 +65,7 @@ class LoginScreen extends StatelessWidget{
           autofocus: true,
           onPressed: (snapshot.hasData && snapshot.data == true)
               ? () {
-            print("Form is valid. Proceed with submission.");
+            bloc.submit();
           }
               : null, // Disable button if there's an error or no valid data
           child: const Text('Submit'),
